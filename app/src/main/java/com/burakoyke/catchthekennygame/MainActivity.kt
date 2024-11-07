@@ -1,78 +1,122 @@
 package com.burakoyke.catchthekennygame
 
-import android.annotation.SuppressLint
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import java.lang.Math.random
-import kotlin.random.Random
+import androidx.appcompat.app.AlertDialog
+import com.burakoyke.catchthekennygame.databinding.ActivityMainBinding
+
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var circularProgressBar: ProgressBar
-    private lateinit var progressText: TextView
-    private lateinit var imageView: ImageView
-    private lateinit var constraintLayout: ConstraintLayout
-    private var progressStatus = 0
-    private var counter = 0
-    private val handler = Handler()
+
+    var score = 0
+    var imageArray = ArrayList<ImageView>()
+    var handler = Handler(Looper.getMainLooper())
+    var runnable = Runnable {  }
+    private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        circularProgressBar = findViewById(R.id.circularProgressBar)
-        progressText = findViewById(R.id.progressText)
-        imageView = findViewById(R.id.imageViewKenny)
-        constraintLayout = findViewById(R.id.layout)
-        val runnable = object : Runnable {
-            override fun run() {
-                if (progressStatus <= 100) {
-                    progressText.text = "$progressStatus%"
-                    circularProgressBar.progress = progressStatus
-                    progressStatus += 10
-                    setRandomPositionWithoutOverlap()
+        //ImageArray
 
-                    handler.postDelayed(this, 1000)
+        imageArray.add(binding.imageView)
+        imageArray.add(binding.imageView2)
+        imageArray.add(binding.imageView3)
+        imageArray.add(binding.imageView4)
+        imageArray.add(binding.imageView5)
+        imageArray.add(binding.imageView6)
+        imageArray.add(binding.imageView7)
+        imageArray.add(binding.imageView8)
+        imageArray.add(binding.imageView9)
+
+
+
+        hideImages()
+
+        //CountDown Timer
+
+        object : CountDownTimer(15500,1000){
+            override fun onFinish() {
+
+                binding.timeText.text = "Time: 0"
+
+                handler.removeCallbacks(runnable)
+
+                for (image in imageArray) {
+                    image.visibility = View.INVISIBLE
                 }
+
+
+
+                //Alert
+                val alert = AlertDialog.Builder(this@MainActivity)
+
+                alert.setTitle("Game Over")
+                alert.setMessage("Restart The Game?")
+                alert.setPositiveButton("Yes") {dialog, which ->
+                    //Restart
+                    val intent = intent
+                    finish()
+                    startActivity(intent)
+
+
+                }
+
+                alert.setNegativeButton("No") {dialog, which ->
+                    Toast.makeText(this@MainActivity,"Game Over",Toast.LENGTH_LONG).show()
+                }
+
+                alert.show()
+
+
             }
+
+            override fun onTick(millisUntilFinished: Long) {
+                binding.timeText.text = "Time: " + millisUntilFinished/1000
+            }
+
+        }.start()
+
+    }
+
+
+    fun hideImages() {
+
+        runnable = object : Runnable {
+            override fun run() {
+                for (image in imageArray) {
+                    image.visibility = View.INVISIBLE
+                }
+
+                val random = Random()
+                val randomIndex = random.nextInt(9)
+                imageArray[randomIndex].visibility = View.VISIBLE
+
+                handler.postDelayed(runnable,500)
+            }
+
         }
+
         handler.post(runnable)
-    }
-    private fun setRandomPositionWithoutOverlap() {
-        val maxWidth = constraintLayout.width - imageView.width
-        val maxHeight = constraintLayout.height - imageView.height
 
-        do {
-            imageView.x = Random.nextInt(0, maxWidth).toFloat()
-            imageView.y = Random.nextInt(0, maxHeight).toFloat()
-        } while (isOverlappingWithProgressBar())
     }
 
-    private fun isOverlappingWithProgressBar(): Boolean {
-        val imageViewLeft = imageView.x
-        val imageViewTop = imageView.y
-        val imageViewRight = imageView.x + imageView.width
-        val imageViewBottom = imageView.y + imageView.height
 
-        val progressBarLeft = circularProgressBar.x
-        val progressBarTop = circularProgressBar.y
-        val progressBarRight = circularProgressBar.x + circularProgressBar.width
-        val progressBarBottom = circularProgressBar.y + circularProgressBar.height
+    fun increaseScore(view: View){
+        score = score + 1
+        binding.scoreText.text = "Score: $score"
 
-        return !(imageViewRight < progressBarLeft ||
-                imageViewLeft > progressBarRight ||
-                imageViewBottom < progressBarTop ||
-                imageViewTop > progressBarBottom)
-    }
-
-    fun kennyClicked(v : View) {
-        counter++
-        Toast.makeText(this, "Kenny Clicked: $counter", Toast.LENGTH_SHORT).show()
     }
 }

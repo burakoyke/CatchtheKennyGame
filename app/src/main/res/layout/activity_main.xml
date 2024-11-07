@@ -1,58 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    tools:context=".MainActivity">
 
-    <!-- ProgressBar ve ProgressText Layout'u -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressLayout"
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="152dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Time: 15"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/scoreText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="152dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="22dp"
+        android:gravity="center"
+        android:text="Score: 0"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeText" />
+
+    <GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toTopOf="@id/imageViewKenny"
+        android:layout_marginBottom="140dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/scoreText">
 
-        <!-- Circular ProgressBar -->
-        <ProgressBar
-            android:id="@+id/circularProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="143dp"
-            android:layout_height="143dp"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="0"
-            android:progressDrawable="@drawable/circular_progress_bar" />
 
-        <!-- Progress Yüzdesi TextView -->
-        <TextView
-            android:id="@+id/progressText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="___"
-            android:textAlignment="center"
-            android:textColor="#E22626"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
-            app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
-            app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
-            app:layout_constraintTop_toTopOf="@+id/circularProgressBar" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
 
-    <!-- Kenny ImageView -->
-    <ImageView
-        android:id="@+id/imageViewKenny"
-        android:layout_width="70dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="16dp"
-        android:onClick="kennyClicked"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressLayout"
-        app:srcCompat="@drawable/kenny" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="0"
+            android:layout_column="2"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="1"
+            android:layout_column="2"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="103dp"
+            android:layout_height="101dp"
+            android:layout_row="2"
+            android:layout_column="2"
+            app:srcCompat="@drawable/kenny"
+            android:onClick="increaseScore"/>
+    </GridLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
